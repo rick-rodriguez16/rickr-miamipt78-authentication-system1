@@ -1,20 +1,11 @@
 export const initialStore=()=>{
   return{
     message: null,
-    todos: [
-      {
-        id: 1,
-        title: "Make the bed",
-        background: null,
-      },
-      {
-        id: 2,
-        title: "Do my homework",
-        background: null,
-      }
-    ]
+    token: null,
   }
 }
+
+
 
 export default function storeReducer(store, action = {}) {
   switch(action.type){
@@ -32,6 +23,11 @@ export default function storeReducer(store, action = {}) {
         ...store,
         todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
       };
+    
+    case 'fetchedToken':
+      break;
+      
+
     default:
       throw Error('Unknown action.');
   }    

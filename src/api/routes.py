@@ -15,8 +15,11 @@ api = Blueprint('api', __name__)
 CORS(api)
 
 
-# Create a route to authenticate your users and return JWTs. The
-# create_access_token() function is used to actually generate the JWT.
+@api.route('/hello', methods=['GET'])
+def get_hello():
+    return jsonify('Hello there!'), 200
+
+
 @api.route("/token", methods=["POST"])
 def generate_token():
     
@@ -30,9 +33,9 @@ def generate_token():
 
     # create a condition if the user does NOT exist or if the password is wrong
     if user is None:
-        raise APIException('Sorry email or password not found', status_code=404)
+        return jsonify('Sorry email or password not found'), 404
     elif user is not None and user.password != password:
-        raise APIException('Sorry email or password not found', status_code=404)
+        return jsonify('Sorry email or password not found'), 404
     
     # the user DOES exist and the passwords matched
     access_token = create_access_token(identity=user.id)
@@ -46,13 +49,34 @@ def generate_token():
     return jsonify(response), 200
 
 
-# HW
-# create a signup route and test it on postman
-# you will receive the email and a password
-# check if the email already exists
-# if it does not exist create a new User()
-# send a jsonified response letting the user know that they have successfully signed up
+@api.route('/signup', methods=['POST'])
+def register_user():
+    email = request.json.get('email')
+    password = request.json.get('password')
 
+    # query the DB to check if the email already exists
+    email = email.lower()
+    user = User.query.filter_by(email=email).first()
+
+    # check if the email exists
+    if user is not None and user.email == email:
+        response = {
+            "message": f"{user.email} already exists. Please log in."
+        }
+        return jsonify(response), 403
+    
+    new_user = User()
+    new_user.email = email
+    new_user.password = password
+    new_user.is_active = True
+    db.session.add(new_user)
+    db.session.commit()
+
+    response = {
+        "message": f"Awesome {new_user.email}! You have successfully signed up!  Please log in."
+    }
+
+    return jsonify(response), 201
 
 
 
