@@ -3,6 +3,8 @@ export const initialStore=()=>{
     message: null,
     token: null,
     isLoginSuccessful: false,
+    loggedIn: false,
+    isSignUpSuccessful: false,
   }
 }
 
@@ -25,13 +27,25 @@ export default function storeReducer(store, action = {}) {
 
     case 'loggedOut':
     {
-      const {message, token, isLoginSuccessful} = action.payload;
+      const {message, token, isLoginSuccessful, loggedIn} = action.payload;
       
       return {
         ...store,
         message: message,
         token: token,
         isLoginSuccessful: isLoginSuccessful,
+        loggedIn: loggedIn,
+      }
+    }
+
+    case 'successfulSignUp':
+    {
+      const {message, isSignUpSuccessful} = action.payload;
+
+      return {
+        ...store,
+        message: message,
+        isSignUpSuccessful: isSignUpSuccessful,
       }
     }
 

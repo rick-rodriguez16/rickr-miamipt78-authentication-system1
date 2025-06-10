@@ -18,9 +18,6 @@ export const Login = () => {
         if (store.isLoginSuccessful) {
             navigate('/private')
         }
-        // else {
-        //     navigate('/login')
-        // }
     }, [store.isLoginSuccessful])
 
     return (
