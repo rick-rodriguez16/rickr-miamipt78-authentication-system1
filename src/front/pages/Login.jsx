@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 
@@ -12,8 +12,16 @@ export const Login = () => {
 
     const handleClick = () => {
         login(email, password, dispatch)
-            .then(() => console.log("It worked!"))
     }
+
+    useEffect(() => {
+        if (store.isLoginSuccessful) {
+            navigate('/private')
+        }
+        // else {
+        //     navigate('/login')
+        // }
+    }, [store.isLoginSuccessful])
 
     return (
         <>
@@ -32,7 +40,7 @@ export const Login = () => {
                         <>
                             <h1>Login</h1>
                             <div>
-                                <input 
+                                <input
                                     type='text'
                                     placeholder='email'
                                     value={email}
@@ -40,8 +48,8 @@ export const Login = () => {
                                 />
                             </div>
                             <div>
-                                <input 
-                                    type='text'
+                                <input
+                                    type='password'
                                     placeholder='password'
                                     value={password}
                                     onChange={e => setPassword(e.target.value)}

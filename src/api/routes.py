@@ -33,9 +33,9 @@ def generate_token():
 
     # create a condition if the user does NOT exist or if the password is wrong
     if user is None:
-        return jsonify('Sorry email or password not found'), 404
+        return jsonify({'message': 'Sorry email or password not found'}), 401
     elif user is not None and user.password != password:
-        return jsonify('Sorry email or password not found'), 404
+        return jsonify({'message': 'Sorry email or password not found'}), 401
     
     # the user DOES exist and the passwords matched
     access_token = create_access_token(identity=user.id)
