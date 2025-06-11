@@ -34,7 +34,7 @@ export const login = async (email, password, dispatch) => {
       message: data.message,
       token: data.access_token,
       isLoginSuccessful: true,
-      loggedIn: true
+      loggedIn: true,
     }
   });
   return data;

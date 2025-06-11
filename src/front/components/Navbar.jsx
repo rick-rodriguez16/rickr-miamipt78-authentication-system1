@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { logout } from "../fetch";
 import useGlobalReducer from "../hooks/useGlobalReducer";
-import { useEffect } from "react";
 
 export const Navbar = () => {
 	const { store, dispatch } = useGlobalReducer();
@@ -26,7 +25,7 @@ export const Navbar = () => {
 				</Link>
 				<div className="ml-auto">
 					{
-						store.loggedIn
+						(store.loggedIn)
 						?
 						<>
 							<Link to="/login">

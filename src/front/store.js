@@ -15,13 +15,14 @@ export default function storeReducer(store, action = {}) {
        
     case 'fetchedToken':
     {
-      const {message, token, isLoginSuccessful} = action.payload;
+      const {message, token, isLoginSuccessful, loggedIn} = action.payload;
 
       return {
         ...store,
         message: message,
         token: token,
         isLoginSuccessful: isLoginSuccessful,
+        loggedIn: loggedIn,
       }
     }
 
