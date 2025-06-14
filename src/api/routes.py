@@ -11,6 +11,8 @@ from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
+# this is a test coming from branch ferature-1/implment-login
+
 # Allow CORS requests to this API
 CORS(api)
 
@@ -22,7 +24,7 @@ def get_hello():
 
 @api.route("/token", methods=["POST"])
 def generate_token():
-    
+
     # login credentials
     email = request.json.get("email", None)
     password = request.json.get("password", None)
@@ -36,7 +38,7 @@ def generate_token():
         return jsonify({'message': 'Sorry email or password not found'}), 401
     elif user is not None and user.password != password:
         return jsonify({'message': 'Sorry email or password not found'}), 401
-    
+
     # the user DOES exist and the passwords matched
     access_token = create_access_token(identity=user.id)
 
@@ -64,7 +66,7 @@ def register_user():
             "message": f"{user.email} already exists. Please log in."
         }
         return jsonify(response), 403
-    
+
     new_user = User()
     new_user.email = email
     new_user.password = password
@@ -77,7 +79,6 @@ def register_user():
     }
 
     return jsonify(response), 201
-
 
 
 # Protect a route with jwt_required, which will kick out requests
